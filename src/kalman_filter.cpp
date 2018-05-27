@@ -42,6 +42,7 @@ void KalmanFilter::Update(const VectorXd &z) {
   P_ = (I - K * H_) * P_;
   return;
 }
+
 void KalmanFilter::UpdateEKF(const VectorXd &z, const MatrixXd &Jac) {
   static float pi = 3.14159265358;
 
@@ -50,7 +51,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z, const MatrixXd &Jac) {
   VectorXd Hx(3);
   Hx << ::sqrt(x_(0)*x_(0) + x_(1)*x_(1)), ::atan2(x_(1), x_(0)), (x_(0)*x_(2) + x_(1)*x_(3)) / ::sqrt(x_(0)*x_(0) + x_(1)*x_(1));
   VectorXd y = z - Hx;
-  //hormalize phi
+  //normalize phi
   if (y(1) > pi) {
     while (y(1) > pi) {
       y(1) = y(1) - 2* pi;
